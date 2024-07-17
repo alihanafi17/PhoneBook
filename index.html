@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>main</title>
+    <title>Phone Book</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="body">
@@ -13,122 +13,31 @@
     </header>
     <div class="container">
         <div class="details">
-            <input type="text" placeholder="Search" id="search-input">
+            <input type="text" placeholder="Search" id="search-input" onkeyup="searchContact(event)">
             <div class="options">
-                <img src="img/add.png" alt="">
-                <img src="img/delete.png" alt="">
+                <img src="img/add.png" onclick="popAdd()" alt="">
+                <img src="img/delete.png" onclick="dltAll()" alt="">
             </div>
         </div>
         <section class="contacts">
             <div class="contact">
-                <!-- <img src="img/contact.png" alt=""> -->
-                <div class="contact-details">
-                    <img src="img/contact.png" alt="">
-                    <p>Jane Smith</p>
-                    <p id="detail">0000000000</p>
-                    <p id="detail">example@example.com</p>
-                    <div class="contact-actions">
-                        <img src="img/edit.png" alt="Error 404">
-                        <img src="img/delete.png" alt="Error 404">
-                    </div>
-                </div>
-                <!-- <div class="contact-actions">
-                    <img src="img/edit.png" alt="Error 404">
-                    <img src="img/delete.png" alt="Error 404">
-                </div> -->
-            </div>
-            <div class="contact">
-                <!-- <img src="img/contact.png" alt=""> -->
-                <div class="contact-details">
-                    <img src="img/contact.png" alt="">
-                    <p>Jane Smith</p>
-                    <p id="detail">0000000000</p>
-                    <p id="detail">example@example.com</p>
-                    <div class="contact-actions">
-                        <img src="img/edit.png" alt="Error 404">
-                        <img src="img/delete.png" alt="Error 404">
-                    </div>
-                </div>
-                <!-- <div class="contact-actions">
-                    <img src="img/edit.png" alt="Error 404">
-                    <img src="img/delete.png" alt="Error 404">
-                </div> -->
-            </div>
-            <div class="contact">
-                <!-- <img src="img/contact.png" alt=""> -->
-                <div class="contact-details">
-                    <img src="img/contact.png" alt="">
-                    <p>Jane Smith</p>
-                    <p id="detail">0000000000</p>
-                    <p id="detail">example@example.com</p>
-                    <div class="contact-actions">
-                        <img src="img/edit.png" alt="Error 404">
-                        <img src="img/delete.png" alt="Error 404">
-                    </div>
-                </div>
-                <!-- <div class="contact-actions">
-                    <img src="img/edit.png" alt="Error 404">
-                    <img src="img/delete.png" alt="Error 404">
-                </div> -->
-            </div>
-            <div class="contact">
-                <!-- <img src="img/contact.png" alt=""> -->
-                <div class="contact-details">
-                    <img src="img/contact.png" alt="">
-                    <p>Jane Smith</p>
-                    <p id="detail">0000000000</p>
-                    <p id="detail">example@example.com</p>
-                    <div class="contact-actions">
-                        <img src="img/edit.png" alt="Error 404">
-                        <img src="img/delete.png" alt="Error 404">
-                    </div>
-                </div>
-                <!-- <div class="contact-actions">
-                    <img src="img/edit.png" alt="Error 404">
-                    <img src="img/delete.png" alt="Error 404">
-                </div> -->
-            </div>
-            <div class="contact">
-                <!-- <img src="img/contact.png" alt=""> -->
-                <div class="contact-details">
-                    <img src="img/contact.png" alt="">
-                    <p>Jane Smith</p>
-                    <p id="detail">0000000000</p>
-                    <p id="detail">example@example.com</p>
-                    <div class="contact-actions">
-                        <img src="img/edit.png" alt="Error 404">
-                        <img src="img/delete.png" alt="Error 404">
-                    </div>
-                </div>
-                <!-- <div class="contact-actions">
-                    <img src="img/edit.png" alt="Error 404">
-                    <img src="img/delete.png" alt="Error 404">
-                </div> -->
-            </div>
-            <div class="contact">
-                <!-- <img src="img/contact.png" alt=""> -->
-                <div class="contact-details">
-                    <img src="img/contact.png" alt="">
-                    <p>Jane Smith</p>
-                    <p id="detail">0000000000</p>
-                    <p id="detail">example@example.com</p>
-                    <div class="contact-actions">
-                        <img src="img/edit.png" alt="Error 404">
-                        <img src="img/delete.png" alt="Error 404">
-                    </div>
-                </div>
-                <!-- <div class="contact-actions">
-                    <img src="img/edit.png" alt="Error 404">
-                    <img src="img/delete.png" alt="Error 404">
-                </div> -->
+                <ul class="list">
+                </ul>
             </div>
         </section>
+    </div>
+    <div class="modal" id="myModal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModalBtn" onclick="closeModal(event)">&times;</button>
+            <div class="modal-container">
+            </div>
+        </div>
     </div>
     <footer class="footer">
         <p>Done By: Ali Hanafi , Bashar Safieh
         </p>
-
     </footer>
+    <script src="index.js"></script>
 </body>
 
 </html>
