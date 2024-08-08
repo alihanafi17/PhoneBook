@@ -1,3 +1,4 @@
+// js code
 "use strict";
 function openModal() {
   document.getElementById('myModal').style.display = 'flex';
@@ -7,7 +8,6 @@ function closeModal(event) {
   if (event.target === document.getElementById('myModal') || event.target === document.getElementById('closeModalBtn')) {
     document.getElementById('myModal').style.display = 'none';
   }
-  // document.getElementById('myModal').style.display = 'none';
 }
 
 let users = [
@@ -42,10 +42,12 @@ function addContact(contact, ind) {
   li.classList.add("contact")
   li.innerHTML =
     `
+    <div class="contact-info">
     <img src="img/contact.png" alt="">
     <p>${contact.name}</p>
     <p class="detail">${contact.number}</p>
     <p class="detail">${contact.email}</p>
+    </div>
     <div class="contact-actions">
         <img onclick="popInfo(${ind})" src="img/info.png" alt="Error 404">
         <img  onclick="popEdit(${ind})" src="img/edit.png" alt="Error 404">
@@ -158,3 +160,4 @@ function searchContact(e) {
     addContact(user);
   })
 }
+// end of js code
