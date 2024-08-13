@@ -89,7 +89,7 @@ function popEdit(ind) {
 }
 
 function dltAll() {
-  let isOk=confirm("are you want to delete contact?");
+  let isOk=confirm("are you want to delete all contacts?");
   if(isOk)
   {
     list.innerHTML =
