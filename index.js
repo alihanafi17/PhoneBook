@@ -66,9 +66,9 @@ function popInfo(ind) {
   modalCont.innerHTML =
     `
     <img src="img/contact.png" alt="Error 404">
-    <p>name: ${contact.name}</p><br
-    <p>number: ${contact.number}</p><br
-    <p>email: ${contact.email}</p>
+    <p>Name: ${contact.name}</p><br
+    <p>Number: ${contact.number}</p><br
+    <p>Email: ${contact.email}</p>
   `
 }
 
@@ -78,33 +78,43 @@ function popEdit(ind) {
   const contact = users[ind]
   modalCont.innerHTML =
     `
+    <form>
     <img src="img/contact.png" alt="Error 404">
-    <p>Name: <input id="editName" type="text" value="${contact.name}"> </p><br
-    <p>Number: <input id="editNumber" type="text" value="${contact.number}"></p><br
-    <p>Email: <input id="editEmail" type="text" value="${contact.email}"></p>
-    <button id="saveBtn" onclick="saveEdit(${ind})">Save</button>
+    <label>Name: <input id="editName" type="text" value="${contact.name}"> </label>
+    <label>Number: <input id="editNumber" type="number" value="${contact.number}"></label>
+    <label>Email: <input id="editEmail" type="email" value="${contact.email}"></label>
+    <input type="submit" id="saveBtn" onclick="saveEdit(event,${ind})" value="Save" ></input>
+    </form>
   `
 }
 
 function dltAll() {
-  list.innerHTML =
+  let isOk=confirm("are you want to delete contact?");
+  if(isOk)
+  {
+    list.innerHTML =
     `
-    <p id="inner"> No contacts ! </p>
+    <p id="inner"> no contacts were added  </p>
     
     `
-  users = [];
+    users = [];
+  }
 }
 
 function dltContact(ind) {
-  users = users.slice(0, ind).concat(users.slice(ind + 1))
-  list.innerHTML = ``;
-  users.forEach((contact, ind) => addContact(contact, ind))
-  if (users.length === 0)
-    list.innerHTML =
-      `
-      <p id="inner"> No contacts ! </p>
+  let isOk=confirm("are you want to delete contact?");
+  if(isOk)
+  {
+    users = users.slice(0, ind).concat(users.slice(ind + 1))
+    list.innerHTML = ``;
+    users.forEach((contact, ind) => addContact(contact, ind))
+    if (users.length === 0)
+      list.innerHTML =
+        `
+        <p id="inner"> no contacts were added  </p>
 
-      `
+        `
+  }
 }
 
 function popAdd() {
@@ -114,7 +124,7 @@ function popAdd() {
     `
     <img src="img/contact.png" alt="Error 404">
     <p>Name: <input id="addName" type="text" placeholder="name"> </p><br
-    <p>Number: <input id="addNumber" type="text" placeholder="number"></p><br
+    <p>Number: <input id="addNumber" type="number" placeholder="number"></p><br
     <p>Email: <input id="addEmail" type="text" placeholder="email"></p>
     <button id="saveBtn" onclick="saveNew()">Save</button>
   `
@@ -127,27 +137,40 @@ function saveNew() {
   if (newName === "" || newNumber === "")
     alert("name or number can't be empty")
   else {
-    const newUser = { name: newName, number: newNumber, email: newEmail };
-    users.push(newUser);
-    list.innerHTML = ``;
-    users.forEach((contact, ind) => addContact(contact, ind))
-    document.getElementById('myModal').style.display = 'none';
-  }
+    if (!newEmail.includes('@') || !newEmail.includes('.')) 
+      alert("Invalid email address");
+    else
+      {
+      const newUser = { name: newName, number: newNumber, email: newEmail };
+      users[ind] = newUser;
+      list.innerHTML = ``;
+      users.forEach((contact, ind) => addContact(contact, ind));
+      document.getElementById('myModal').style.display = 'none';
+      }
+    }
+
 }
 
-function saveEdit(ind) {
+function saveEdit(event,ind) {
+  event.preventDefault();
   let newName = document.querySelector("#editName").value;
   let newNumber = document.querySelector("#editNumber").value;
   let newEmail = document.querySelector("#editEmail").value;
   if (newName === "" || newNumber === "")
     alert("name or number can't be empty")
   else {
+  if (!newEmail.includes('@') || !newEmail.includes('.')) 
+    alert("Invalid email address");
+  else
+    {
     const newUser = { name: newName, number: newNumber, email: newEmail };
     users[ind] = newUser;
     list.innerHTML = ``;
     users.forEach((contact, ind) => addContact(contact, ind));
     document.getElementById('myModal').style.display = 'none';
+    }
   }
+
 }
 
 function searchContact(e) {
@@ -156,8 +179,24 @@ function searchContact(e) {
     .filter(user => {
       return user.name.toLowerCase().startsWith(e.target.value.toLowerCase());
     });
-  filteredList.forEach(user => {
+    list.innerHTML = ``;
+    filteredList.forEach(user => {
     addContact(user);
   })
 }
+
+list.addEventListener('mouseover', (event) => {
+  if (event.target.tagName === 'LI') {
+    event.target.style.fontWeight = 'bold';
+    event.target.style.backgroundColor = '#f7f7f7'; // or any other darker shade
+  }
+});
+
+list.addEventListener('mouseout', (event) => {
+  if (event.target.tagName === 'LI') {
+    event.target.style.fontWeight = 'normal';
+    event.target.style.backgroundColor = ''; // reset to default background color
+  }
+});
+
 // end of js code
