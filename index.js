@@ -56,7 +56,15 @@ function addContact(contact, ind) {
   `
   list.append(li);
 }
-
+function sortContacts(contacts) {
+  contacts.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
+  return contacts;
+}
+sortContacts(users);
 users.forEach((contact, ind) => addContact(contact, ind))
 
 function popInfo(ind) {
@@ -89,12 +97,11 @@ function popEdit(ind) {
 }
 
 function dltAll() {
-  let isOk=confirm("are you sure?");
-  if(isOk)
-  {
+  let isOk = confirm("Are you sure?");
+  if (isOk) {
     list.innerHTML =
-    `
-    <p id="inner"> no contacts were added  </p>
+      `
+    <p id="inner"> No contacts were added  </p>
     
     `
     users = [];
@@ -102,16 +109,15 @@ function dltAll() {
 }
 
 function dltContact(ind) {
-  let isOk=confirm("are you sure?");
-  if(isOk)
-  {
+  let isOk = confirm("Are you sure?");
+  if (isOk) {
     users = users.slice(0, ind).concat(users.slice(ind + 1))
     list.innerHTML = ``;
     users.forEach((contact, ind) => addContact(contact, ind))
     if (users.length === 0)
       list.innerHTML =
         `
-        <p id="inner"> no contacts were added  </p>
+        <p id="inner"> No contacts were added  </p>
 
         `
   }
@@ -125,62 +131,100 @@ function popAdd() {
     <img src="img/contact.png" alt="Error 404">
     <p>Name: <input id="addName" type="text" placeholder="name"> </p><br
     <p>Number: <input id="addNumber" type="number" placeholder="number"></p><br
-    <p>Email: <input id="addEmail" type="text" placeholder="email"></p>
+    <p>Email: <input id="addEmail" type="email" placeholder="email"></p>
     <button id="saveBtn" onclick="saveNew()">Save</button>
   `
 }
+
+// function saveNew() {
+//   let newName = document.querySelector("#addName").value;
+//   let newNumber = document.querySelector("#addNumber").value;
+//   let newEmail = document.querySelector("#addEmail").value;
+//   if (newName === "" || newNumber === "")
+//     alert("name or number can't be empty")
+//   else {
+//     const newUser = { name: newName, number: newNumber, email: newEmail };
+//     users.push(newUser);
+//     list.innerHTML = ``;
+//     sortContacts(users);
+//     users.forEach((contact, ind) => addContact(contact, ind))
+//     document.getElementById('myModal').style.display = 'none';
+//   }
+// }
 
 function saveNew() {
   let newName = document.querySelector("#addName").value;
   let newNumber = document.querySelector("#addNumber").value;
   let newEmail = document.querySelector("#addEmail").value;
-  if (newName === "" || newNumber === "")
-    alert("name or number can't be empty")
-  else {
-    if (!newEmail.includes('@') || !newEmail.includes('.')) 
-      alert("Invalid email address");
-    else
-      {
-      const newUser = { name: newName, number: newNumber, email: newEmail };
-      users[ind] = newUser;
-      list.innerHTML = ``;
-      users.forEach((contact, ind) => addContact(contact, ind));
-      document.getElementById('myModal').style.display = 'none';
+
+  if (newName === "" || newNumber === "") {
+    alert("name or number can't be empty");
+  } else {
+    if (newEmail !== "") {
+      if (!checkEmail(newEmail)) {
+        alert("Invalid email address");
+        return;
       }
     }
-
+    const newUser = { name: newName, number: newNumber, email: newEmail };
+    users.push(newUser);
+    list.innerHTML = ``;
+    sortContacts(users);
+    users.forEach((contact, ind) => addContact(contact, ind));
+    document.getElementById('myModal').style.display = 'none';
+  }
 }
 
-function saveEdit(event,ind) {
+// function saveEdit(event,ind) {
+//   event.preventDefault();
+//   let newName = document.querySelector("#editName").value;
+//   let newNumber = document.querySelector("#editNumber").value;
+//   let newEmail = document.querySelector("#editEmail").value;
+//   if (newName === "" || newNumber === "")
+//     alert("name or number can't be empty")
+//   else {
+//     const newUser = { name: newName, number: newNumber, email: newEmail };
+//     users[ind] = newUser;
+//     list.innerHTML = ``;
+//     sortContacts(users);
+//     users.forEach((contact, ind) => addContact(contact, ind));
+//     document.getElementById('myModal').style.display = 'none';
+//   }
+
+// }
+
+function saveEdit(event, ind) {
   event.preventDefault();
   let newName = document.querySelector("#editName").value;
   let newNumber = document.querySelector("#editNumber").value;
   let newEmail = document.querySelector("#editEmail").value;
-  if (newName === "" || newNumber === "")
-    alert("name or number can't be empty")
-  else {
-  if (!newEmail.includes('@') || !newEmail.includes('.')) 
-    alert("Invalid email address");
-  else
-    {
+
+  if (newName === "" || newNumber === "") {
+    alert("name or number can't be empty");
+  } else {
+    if (newEmail !== "") {
+      if (!checkEmail(newEmail)) {
+        alert("Invalid email address");
+        return;
+      }
+    }
     const newUser = { name: newName, number: newNumber, email: newEmail };
     users[ind] = newUser;
     list.innerHTML = ``;
+    sortContacts(users);
     users.forEach((contact, ind) => addContact(contact, ind));
     document.getElementById('myModal').style.display = 'none';
-    }
   }
-
 }
 
 function searchContact(e) {
   list.innerHTML = ``;
   const filteredList = users
     .filter(user => {
-      return user.name.toLowerCase().startsWith(e.target.value.toLowerCase());
+      return user.name.toLowerCase().includes(e.target.value.toLowerCase());
     });
-    list.innerHTML = ``;
-    filteredList.forEach(user => {
+  list.innerHTML = ``;
+  filteredList.forEach(user => {
     addContact(user);
   })
 }
@@ -188,7 +232,7 @@ function searchContact(e) {
 list.addEventListener('mouseover', (event) => {
   if (event.target.tagName === 'LI') {
     event.target.style.fontWeight = 'bold';
-    event.target.style.backgroundColor = '#f7f7f7'; // or any other darker shade
+    event.target.style.backgroundColor = '#f7f7f7';
   }
 });
 
@@ -199,4 +243,7 @@ list.addEventListener('mouseout', (event) => {
   }
 });
 
+function checkEmail(email) {
+  return email.includes('@') && email.includes('.');
+}
 // end of js code
