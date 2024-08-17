@@ -76,8 +76,14 @@ function popInfo(ind) {
     <img src="img/contact.png" alt="Error 404">
     <p>Name: ${contact.name}</p><br
     <p>Number: ${contact.number}</p><br
-    <p>Email: ${contact.email}</p>
-  `
+    ${contact.email === "" ? "" :
+      `
+      <p>Email: ${contact.email}</p>
+    
+      `
+    }
+    
+    `
 }
 
 function popEdit(ind) {
@@ -245,5 +251,13 @@ list.addEventListener('mouseout', (event) => {
 
 function checkEmail(email) {
   return email.includes('@') && email.includes('.');
+}
+
+function changeMode(){
+  const body = document.body;
+  body.classList.toggle('mode');
+
+  const contacts = document.querySelector('.contacts');
+  contacts.classList.toggle('mode');
 }
 // end of js code

@@ -11,9 +11,9 @@
     font-size: 62.5%;
 }
 
-body {
+.body {
     font-size: 1.6rem;
-    background-color: rgb(184, 184, 226);
+    background-color: rgb(108 108 209);
     font-weight: 400;
     line-height: 1.5;
     height: 100vh;
@@ -228,6 +228,13 @@ form img {
     font-size: 25px;
 }
 
+.mode {
+    background-color: #fff; /* darker background */
+  }
+  
+  .contacts.mode{
+    background-color: rgb(108 108 209); /* white text color for all user data */
+  }
 /* #endregion main */
 /* #region footer */
 .footer p {
