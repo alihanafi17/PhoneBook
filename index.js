@@ -18,7 +18,7 @@ let users = [
   },
   {
     name: "bashar safieh",
-    number: "0545930714",
+    number: "0545930713",
     email: "example@example.com"
   },
   {
@@ -36,7 +36,7 @@ let users = [
 const list = document.querySelector(".list");
 
 function addContact(contact, ind) {
-  if (list.innerHTML === `<p> No contacts ! </p>`)
+  if (list.innerHTML === `<p> No contacts were added </p>`)
     list.innerHTML = ``;
   const li = document.createElement('li')
   li.classList.add("contact")
@@ -142,22 +142,6 @@ function popAdd() {
   `
 }
 
-// function saveNew() {
-//   let newName = document.querySelector("#addName").value;
-//   let newNumber = document.querySelector("#addNumber").value;
-//   let newEmail = document.querySelector("#addEmail").value;
-//   if (newName === "" || newNumber === "")
-//     alert("name or number can't be empty")
-//   else {
-//     const newUser = { name: newName, number: newNumber, email: newEmail };
-//     users.push(newUser);
-//     list.innerHTML = ``;
-//     sortContacts(users);
-//     users.forEach((contact, ind) => addContact(contact, ind))
-//     document.getElementById('myModal').style.display = 'none';
-//   }
-// }
-
 function saveNew() {
   let newName = document.querySelector("#addName").value;
   let newNumber = document.querySelector("#addNumber").value;
@@ -166,8 +150,16 @@ function saveNew() {
   if (newName === "" || newNumber === "") {
     alert("name or number can't be empty");
   } else {
+    if (checkName(newName)) {
+      alert("name is exist")
+      return;
+    }
+    if (checkNumber(newNumber)) {
+      alert("number is exist")
+      return;
+    }
     if (newEmail !== "") {
-      if (!checkEmail(newEmail)) {
+      if (!validateEmail(newEmail)) {
         alert("Invalid email address");
         return;
       }
@@ -181,24 +173,6 @@ function saveNew() {
   }
 }
 
-// function saveEdit(event,ind) {
-//   event.preventDefault();
-//   let newName = document.querySelector("#editName").value;
-//   let newNumber = document.querySelector("#editNumber").value;
-//   let newEmail = document.querySelector("#editEmail").value;
-//   if (newName === "" || newNumber === "")
-//     alert("name or number can't be empty")
-//   else {
-//     const newUser = { name: newName, number: newNumber, email: newEmail };
-//     users[ind] = newUser;
-//     list.innerHTML = ``;
-//     sortContacts(users);
-//     users.forEach((contact, ind) => addContact(contact, ind));
-//     document.getElementById('myModal').style.display = 'none';
-//   }
-
-// }
-
 function saveEdit(event, ind) {
   event.preventDefault();
   let newName = document.querySelector("#editName").value;
@@ -208,8 +182,16 @@ function saveEdit(event, ind) {
   if (newName === "" || newNumber === "") {
     alert("name or number can't be empty");
   } else {
+    if(checkName(newName,ind)){
+      alert("name is exist")
+      return;
+    }
+    if (checkNumber(newNumber,ind)) {
+      alert("number is exist")
+      return;
+    }
     if (newEmail !== "") {
-      if (!checkEmail(newEmail)) {
+      if (!validateEmail(newEmail)) {
         alert("Invalid email address");
         return;
       }
@@ -225,6 +207,7 @@ function saveEdit(event, ind) {
 
 function searchContact(e) {
   list.innerHTML = ``;
+  sortContacts(users);
   const filteredList = users
     .filter(user => {
       return user.name.toLowerCase().includes(e.target.value.toLowerCase());
@@ -249,15 +232,30 @@ list.addEventListener('mouseout', (event) => {
   }
 });
 
-function checkEmail(email) {
-  return email.includes('@') && email.includes('.');
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
-function changeMode(){
+function changeMode() {
   const body = document.body;
   body.classList.toggle('mode');
 
   const contacts = document.querySelector('.contacts');
   contacts.classList.toggle('mode');
+}
+
+function checkNumber(number,ind) {
+  for (let i = 0; i < users.length; i++) {
+    if (i !== ind && users[i].number === number) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function checkName(name, ind) {
+  for (let i = 0; i < users.length; i++)
+    return (i !== ind && users[i].name === name)
 }
 // end of js code

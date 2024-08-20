@@ -229,12 +229,15 @@ form img {
 }
 
 .mode {
-    background-color: #fff; /* darker background */
-  }
-  
-  .contacts.mode{
-    background-color: rgb(108 108 209); /* white text color for all user data */
-  }
+    background-color: #fff;
+    /* darker background */
+}
+
+.contacts.mode {
+    background-color: rgb(108 108 209);
+    /* white text color for all user data */
+}
+
 /* #endregion main */
 /* #region footer */
 .footer p {
@@ -268,6 +271,7 @@ form img {
 
     .container {
         width: 100%;
+        padding: 10px;
     }
 
     .body {
@@ -279,8 +283,34 @@ form img {
         gap: 10px;
     }
 
+    .options {
+        gap: 10px;
+    }
+
     .details {
-        gap: 20px;
+        gap: 10px;
+    }
+
+
+}
+
+@media (max-width: 500px) {
+    .container {
+        width: 400px;
+        padding: 0 auto;
+
+    }
+}
+
+@media (max-width: 400px) {
+    .container {
+        width: 300px;
+        padding: 0 auto;
+
+    }
+
+    .details img {
+        gap: 10px;
     }
 
 }
