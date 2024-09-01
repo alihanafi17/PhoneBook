@@ -103,7 +103,7 @@ function popEdit(ind) {
 }
 
 function dltAll() {
-  let isOk = confirm("Are you sure?");
+  let isOk = confirm("Are you sure you want to delete all contacts?");
   if (isOk) {
     list.innerHTML =
       `
@@ -115,7 +115,7 @@ function dltAll() {
 }
 
 function dltContact(ind) {
-  let isOk = confirm("Are you sure?");
+  let isOk = confirm(`Are you sure you want to delete ${users[ind].name}? `);
   if (isOk) {
     users = users.slice(0, ind).concat(users.slice(ind + 1))
     list.innerHTML = ``;
@@ -182,11 +182,11 @@ function saveEdit(event, ind) {
   if (newName === "" || newNumber === "") {
     alert("name or number can't be empty");
   } else {
-    if(checkName(newName,ind)){
+    if (checkName(newName, ind)) {
       alert("name is exist")
       return;
     }
-    if (checkNumber(newNumber,ind)) {
+    if (checkNumber(newNumber, ind)) {
       alert("number is exist")
       return;
     }
@@ -205,16 +205,20 @@ function saveEdit(event, ind) {
   }
 }
 
+
 function searchContact(e) {
   list.innerHTML = ``;
   sortContacts(users);
-  const filteredList = users
-    .filter(user => {
-      return user.name.toLowerCase().includes(e.target.value.toLowerCase());
-    });
+  const filteredList = users.filter(user => {
+    return user.name.toLowerCase().includes(e.target.value.toLowerCase());
+  });
   list.innerHTML = ``;
-  filteredList.forEach(user => {
-    addContact(user);
+  filteredList.forEach((user) => {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].name === user.name && users[i].number === user.number) {
+        addContact(user, i);
+      }
+    }
   })
 }
 
@@ -240,12 +244,11 @@ function validateEmail(email) {
 function changeMode() {
   const body = document.body;
   body.classList.toggle('mode');
-
   const contacts = document.querySelector('.contacts');
   contacts.classList.toggle('mode');
 }
 
-function checkNumber(number,ind) {
+function checkNumber(number, ind) {
   for (let i = 0; i < users.length; i++) {
     if (i !== ind && users[i].number === number) {
       return true;
@@ -255,7 +258,11 @@ function checkNumber(number,ind) {
 }
 
 function checkName(name, ind) {
-  for (let i = 0; i < users.length; i++)
-    return (i !== ind && users[i].name === name)
+  for (let i = 0; i < users.length; i++) {
+    if (i !== ind && users[i].name === name) {
+      return true;
+    }
+  }
+  return false;
 }
 // end of js code
